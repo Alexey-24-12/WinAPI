@@ -1,17 +1,17 @@
-#include <Windows.h>
+п»ї#include <Windows.h>
 #include "resource.h"
 
 BOOL CALLBACK DigProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 /*
 --------------------------------------------------------------------------
-Окно, сообщение и параметры сообщения.
-hwnd - окно;
-uMsg - сообщение;
-wParam, lParam - параметры сообщения;
+РћРєРЅРѕ, СЃРѕРѕР±С‰РµРЅРёРµ Рё РїР°СЂР°РјРµС‚СЂС‹ СЃРѕРѕР±С‰РµРЅРёСЏ.
+hwnd - РѕРєРЅРѕ;
+uMsg - СЃРѕРѕР±С‰РµРЅРёРµ;
+wParam, lParam - РїР°СЂР°РјРµС‚СЂС‹ СЃРѕРѕР±С‰РµРЅРёСЏ;
 ----------------
-HWND - Handler to Window (Дескриптор, описатель окна);
-WPARAM и LPARAM - это самые обычные значения типа DWORD (INT).
-Эти параметры часто делят на HIWORD и LOWORD
+HWND - Handler to Window (Р”РµСЃРєСЂРёРїС‚РѕСЂ, РѕРїРёСЃР°С‚РµР»СЊ РѕРєРЅР°);
+WPARAM Рё LPARAM - СЌС‚Рѕ СЃР°РјС‹Рµ РѕР±С‹С‡РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ С‚РёРїР° DWORD (INT).
+Р­С‚Рё РїР°СЂР°РјРµС‚СЂС‹ С‡Р°СЃС‚Рѕ РґРµР»СЏС‚ РЅР° HIWORD Рё LOWORD
 0 kb
 --------------------------------------------------------------------------
 */
@@ -26,13 +26,13 @@ BOOL CALLBACK DigProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
 	{
-	case WM_INITDIALOG:	// Инициализация окна диалога. Эта секция отрабатывает 1 раз - при запуске окна.
+	case WM_INITDIALOG:	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РѕРєРЅР° РґРёР°Р»РѕРіР°. Р­С‚Р° СЃРµРєС†РёСЏ РѕС‚СЂР°Р±Р°С‚С‹РІР°РµС‚ 1 СЂР°Р· - РїСЂРё Р·Р°РїСѓСЃРєРµ РѕРєРЅР°.
 	{
 		HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON1));
 		SendMessage(hwnd, WM_SETICON, 0, (LPARAM)hIcon);
 	}
 	break;
-	case WM_COMMAND:	// В этой секции обрабатываются нажания кнопок, клавиш и другие события
+	case WM_COMMAND:	// Р’ СЌС‚РѕР№ СЃРµРєС†РёРё РѕР±СЂР°Р±Р°С‚С‹РІР°СЋС‚СЃСЏ РЅР°Р¶Р°РЅРёСЏ РєРЅРѕРїРѕРє, РєР»Р°РІРёС€ Рё РґСЂСѓРіРёРµ СЃРѕР±С‹С‚РёСЏ
 		switch (LOWORD(wParam))
 		{
 		break;
@@ -42,20 +42,20 @@ BOOL CALLBACK DigProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			CHAR sz_buffer[SIZE] = {};
 			HWND hEditLogin = GetDlgItem(hwnd, IDC_EDIT_LOGIN);
 			HWND hEditPassword = GetDlgItem(hwnd, IDC_EDIT_PASSWORD);
-			// Функция GetDigItem() позволяет получить HWND элемента окна "hwnd",
-			// no RESOURCE_ID нужного элемента.
-			// RESOURCE_ID - это самое обычное значение типа 'INT'
+			// Р¤СѓРЅРєС†РёСЏ GetDigItem() РїРѕР·РІРѕР»СЏРµС‚ РїРѕР»СѓС‡РёС‚СЊ HWND СЌР»РµРјРµРЅС‚Р° РѕРєРЅР° "hwnd",
+			// no RESOURCE_ID РЅСѓР¶РЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°.
+			// RESOURCE_ID - СЌС‚Рѕ СЃР°РјРѕРµ РѕР±С‹С‡РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ С‚РёРїР° 'INT'
 			//-----------------------------------------
-			// WM_ - WindowMessage (такое сообщение можно отправить любому окну)
+			// WM_ - WindowMessage (С‚Р°РєРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ РјРѕР¶РЅРѕ РѕС‚РїСЂР°РІРёС‚СЊ Р»СЋР±РѕРјСѓ РѕРєРЅСѓ)
 			SendMessage(hEditLogin, WM_GETTEXT, SIZE, (LPARAM)sz_buffer);
 			SendMessage(hEditPassword, WM_SETTEXT, 0, (LPARAM)sz_buffer);
 		}
 		break;
-		case IDOK: MessageBox(hwnd, "Была нажата кнопка OK", "Info", MB_OK | MB_ICONINFORMATION); break;
+		case IDOK: MessageBox(hwnd, "Р‘С‹Р»Р° РЅР°Р¶Р°С‚Р° РєРЅРѕРїРєР° OK", "Info", MB_OK | MB_ICONINFORMATION); break;
 		case IDCANCEL: EndDialog(hwnd, 0); break;
 		}
 		break;
-	case WM_CLOSE:	// Отрабатывает й раз при закрытии окна
+	case WM_CLOSE:	// РћС‚СЂР°Р±Р°С‚С‹РІР°РµС‚ Р№ СЂР°Р· РїСЂРё Р·Р°РєСЂС‹С‚РёРё РѕРєРЅР°
 		EndDialog(hwnd, 0);
 	}
 		return FALSE;
