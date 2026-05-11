@@ -217,6 +217,23 @@ LRESULT WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	////////////////////////////////////////////////////////////////////////
+	case WM_CTLCOLOREDIT:
+	{
+		HDC hdc = (HDC)wParam;	//Handler to Device Context.
+		//Контекст устройства - это набор ресурсов, привязанных к определённому устройству,
+		//позволяющий применять к этому устройству графические функции.
+		//В ОС Windows абсолютно для любого окна можно получить контекст устройства при помощи фукнкции GetDC(HWND
+		//SetBkMode(hdc, OPAQUE);	//Задаём непрозрачный режим отображения hEditDisplay.
+		SetBkColor(hdc, RGB(0, 0, 100));		//Задаёт цвет фона для EditControl
+		SetTextColor(hdc, RGB(200, 200, 200));	//Задаёт цвет текста для EditControl
+		HBRUSH hBackground = CreateSolidBrush(RGB(0, 0, 200));	//Создаём кисть для того чтобы покрасить главное окно.
+		SetClassLongPtr(hwnd, GCLP_HBRBACKGROUND, (LONG)hBackground);	//Подменяем цвет фона в классе главного окна.
+		//UpdateWindow(hwnd);
+		SendMessage(hwnd, WM_ERASEBKGND, wParam, 0);	//Убираем старый фон с главного окна.
+		return (LRESULT)hBackground;
+	}
+	break;
+	////////////////////////////////////////////////////////////////////////
 	case WM_COMMAND:
 	{
 		static DOUBLE	a = DBL_MIN, b = DBL_MIN;	//Минимально-возможное значение, которое может хранить 'double'.
